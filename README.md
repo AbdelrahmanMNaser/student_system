@@ -13,7 +13,7 @@ The application has three types of users: students, professors, and admins, each
 - View grades of the semester they choose only if the sum of all max scores is equal to 100.
 
 ### Professors can:
-- View enrolled courses for the semester they select. On clicking on a course name, they can view the tasks they have to do and scores for it.
+- View enrolled courses for the semester they select. On clicking on a course name, they can submit or view tasks and scores for it.
 - View schedule for classes, the assessments of all courses together.
 - View and add new tasks to students, setting max score, description, and timing for the online ones.
 - Submit and view student scores for the tasks.
