@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="EN">
+
+<head>
+   <link rel="stylesheet" href="../css/login.css">
+   <title>Login</title>
+   <link rel="shortcut icon" href="../images/university.png" type="image/x-icon">
+
+   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+   <script src="../js/customized_alert.js"></script>
+
+   <script>
+      function showRegisterOption() {
+         var role = document.getElementById("role").value;
+         if (role === "admin") {
+            document.getElementById("register").style.display = "block";
+         } else {
+            document.getElementById("register").style.display = "none";
+         }
+      }
+   </script>
+
+</head>
+
+<body>
+   <div class="heading">
+      <h2>Faculty Of Science</h2>
+      <hr>
+   </div>
+   <section>
+      <div class="form-box">
+         <div class="form-value">
+            <form method="post" action="login-logic.php">
+               <h2 id="s"> Login</h2>
+               <div class="adj-select">
+
+                  <p>Login As :</p>
+                  <br>
+
+                  <select name="role" id="role" class="form-select custom-radio-select" aria-label="Radio Select"
+                     onchange="showRegisterOption()" required>
+                     <option value="" disabled selected>select role</option>
+                     <option value="admin">Admin</option>
+                     <option value="professor">Professor</option>
+                     <option value="student">Student</option>
+                  </select>
+               </div>
+
+               <div class="inputbox">
+                  <ion-icon name="person-outline"></ion-icon>
+                  <input id="email" name="email" type="text" required>
+                  <label for="email">Email</label>
+               </div>
+
+
+               <input class="submit-button" type="submit" value="Next" name="login_email">
+               <div class="register">
+                  <p id="register" style="display: none;"> Don't have an account?
+                     <a href="signup.html">Signup</a>
+                  </p>
+               </div>
+            </form>
+         </div>
+      </div>
+   </section>
+
+   <script>
+      if (new URLSearchParams(window.location.search).has("error")) {
+         showAlert("Account does not Exist", "Check entred role or e-mail", "error", "Try Again")
+      }
+   </script>
+
+</body>
+
+</html>

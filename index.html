@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="css/all.min.css">
+  <title>Main Page</title>
+  <link rel="shortcut icon" href="images/university.png" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- //////////////////Navbar///////////////////////// -->
+  <nav class="navbar navbar-expand-lg nav-bg position-sticky top-0 z-3 text-secondary p-0 pt-0n" id="navv">
+    <div class="container-fluid">
+      <a class="navbar-brand  text-secondary nav-title ps-4  fw-medium p-2 pt-3" href="#">
+        <img class="w-fixed text-black" src="images/university.gif" alt="logo">
+        <span class=" position-absolute text-uppercase" style="top:35px;">
+        </span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse pt-2" id="navbarNavDropdown">
+        <ul class="navbar-nav ms-auto pe-4">
+
+          <li class="nav-item dropdown">
+            <a class="nav-link1 text-decoration-none d-block dropdown-toggle text-uppercase  text-secondary ps-3"
+              href="#courses" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Courses
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item text-capitalize fs-small fw-semibold text-muted" href="cs_courses.html">Computer
+                  Science
+                </a>
+              </li>
+
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link  text-uppercase  text-secondary text-bold ps-3 me-5" href="login/login.html">LOGIN</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- ///////////////////////Home Section//////////////////// -->
+
+  <section class="carousel home min-vh-100 ">
+    <div id="slider" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#slider" data-bs-slide-to="0" class="active border-0 bg-transparent"
+          aria-current="true" aria-label="Slide 1">
+          <div style="width:10px; height:10px; border-radius:50%; background-color:white;"></div>
+        </button>
+        <button type="button" data-bs-target="#slider" data-bs-slide-to="1" aria-label="Slide 2"
+          class="border-0 bg-transparent">
+          <div style="width:10px; height:10px; border-radius:50%; background-color:white;"></div>
+        </button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="c-item-1">
+            <div class="col-md-6 ftco-animate px-5">
+              <h1 class="mb-4 text-white">Education Needs Complete Solution</h1>
+              <p class="text-white">
+                Our web app is a one-stop solution, making education interactive and accessible for everyone.
+              </p>
+              <p>
+                <a href="contact_us.html" class="btn button-home rounded-pill px-4 py-3 mt-3">Contact Us</a>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="c-item-2">
+            <div class="col-md-6 ftco-animate px-5">
+              <h1 class="mb-4 text-white">Education Needs Complete Solution</h1>
+              <p class="text-white">
+                Our web app is a one-stop solution, making education interactive and accessible for everyone.
+              </p>
+              <p>
+                <a href="contact_us.html" class="btn button-home rounded-pill px-4 py-3 mt-3">Contact Us</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+  </section>
+
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
