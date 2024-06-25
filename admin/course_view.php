@@ -5,12 +5,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Course - View</title>
+  
 </head>
 
 <body>
   <?php
   include("../includes/identity_nav.php");
   include("menu_nav.html");
+  include("../includes/delete_item.php");
   ?>
 
   <section class="mx-auto admin text-center min-vh-100 py-5 px-3">
@@ -27,6 +29,7 @@
         <th>Credits</th>
         <th>Pre-requisit</th>
         <th>Description</th>
+        <th colspan="2">Actions</th>
       </thead>
       <tbody>
 
@@ -62,11 +65,47 @@
             <td> <?php echo $pre_requisites ?> </td>
             <td> <?php echo $course_description ?> </td>
 
+            <td>
+              <form action="course_add.php" method="post" onsubmit="confirmEdit(event, '<?php echo $course_name ?> Course');">
+                <input type="hidden" name="crs_name" value="<?php echo $course_name ?>">
+                <input type="hidden" name="crs_credit" value="<?php echo $course_credits ?>">
+                <input type="hidden" name="crs_description" value="<?php echo $course_description ?>">
+                <input type="hidden" name="pre_req" value="<?php echo $pre_requisites ?>">
+
+                <input type="hidden" name="edit" value="<?php echo $course_id ?>">
+                <button type="submit" class="btn btn-warning">
+                  <i class="fas fa-edit"></i>
+                </button>
+              </form>
+            </td>
+
+            <td>
+              <form action="" method="post" onsubmit="confirmRemove(event, '<?php echo $course_name ?> Course');">
+                <input type="hidden" name="delete" value="<?php echo $course_id ?>">
+                <button type="submit" class="btn btn-danger">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </form>
+            </td>
+
           </tr>
         <?php endwhile ?>
       </tbody>
     </table>
   </section>
+
+  <script>
+    if (new URLSearchParams(window.location.search).has("edit")) {
+      showAlert("Edit Successful", "Course data is editted Successfully", "info", "OK");
+    }
+  </script>
 </body>
 
 </html>
+
+<?php
+if (isset($_POST["delete"])) {
+  $pk_value = $_POST["delete"];
+  delete_Row("course", "id", $pk_value);
+}
+?>

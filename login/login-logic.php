@@ -51,6 +51,7 @@ if (isset($_POST["login_email"])) {
         $_SESSION["id"] = $user["id"];
         $_SESSION["fname"] = $user["first_name"];
         $_SESSION["lname"] = $user["last_name"];
+        $_SESSION["gender"] = $user["gender"];
 
         header("Location: ../{$role}/home.php");
     } else {

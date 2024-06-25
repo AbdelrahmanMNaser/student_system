@@ -46,7 +46,7 @@
         WHERE
             enrollment.course_id = '$_SESSION[choosen_course_id]'
             AND enrollment.semester_id = '$_SESSION[semester]'
-
+            AND enrollment.student_id = '$_SESSION[id]'
           ";
 
     $result = $conn->query($retrieve);
@@ -62,6 +62,7 @@
           <th>Start Time</th>
           <th>End Time</th>
           <th>Description</th>
+          <th>illustration File</th>
           <th>Submission Link</th>
         </thead>
 
@@ -100,6 +101,9 @@
               <td><?php echo $start_time ?></td>
               <td><?php echo $end_time ?></td>
               <td><?php echo $description ?></td>
+              <td>
+                
+              </td>
               <td>
                 <?php if ($url) : ?>
                   <a href="<?php echo $url ?>" target="_blank">Link</a>

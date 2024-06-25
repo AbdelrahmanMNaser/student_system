@@ -46,20 +46,14 @@ function displayAttachement() {
           fileInput.value = "";  // Clear the file input
           this.remove();  // Remove the label
         };
-
-
-
         attachArea.appendChild(removeLabel);
       }
     };
 
-
     attachLabel.innerHTML = "Remove Attachement";
     attachLabel.style.color = "red";
 
-
     attachArea.appendChild(newLabel);
     attachArea.appendChild(fileInput);    
-
   }
 }

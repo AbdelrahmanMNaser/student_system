@@ -31,7 +31,12 @@
                 <option value="" disabled selected>select course</option>
 
                 <?php
-                $retrieve = "SELECT id, name FROM course,, teaching ";
+                $retrieve = "SELECT id, name
+                 FROM 
+                  course 
+                  WHERE 
+                    id NOT IN 
+                      (SELECT course_id FROM teaching WHERE semester_id = '$_SESSION[current_semester_id]')";
                 $result = $conn->query($retrieve);
 
                 while ($row = $result->fetch_assoc()) {
@@ -47,28 +52,63 @@
 
             <div class="col-md-6">
 
-              <select class="form-select" name="professor" id="professor">
-                <option value="" disabled selected>select professor</option>
-                <?php
+              <div class="mb-3">
+                <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="professorDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    Select Professor(s)
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="professorDropdown">
+                    <?php
 
+                    $retrieve = "SELECT 
+              Professor.id AS prof_id, 
+              Professor.first_name AS prof_fname , 
+              Professor.last_name AS prof_lname, 
+              Department.name AS dept_name
+              FROM   
+                Professor, Department 
+              WHERE  
+                Professor.department_id = Department.id
+              ORDER BY 
+                Department.name
+              ";
 
-                $retrieve = "SELECT Professor.id as prof_id , Professor.first_name as prof_fname , Professor.last_name as prof_lname , Department.name as dept_name
-                        FROM   Professor, Department 
-                        WHERE  Professor.department_id = Department.id
-                        ORDER BY Department.name
-                        ";
+                    $result = $conn->query($retrieve);
 
-                $result = $conn->query($retrieve);
+                    $lastDept = null;
+                    if ($result) {
+                      while ($row = $result->fetch_assoc()) {
+                        $prof_id = $row["prof_id"];
+                        $prof_full_name = $row["prof_fname"] . " " . $row["prof_lname"];
+                        $dept_name = $row["dept_name"];
 
-                while ($row = $result->fetch_assoc()) {
-                  $prof_id = $row["prof_id"];
-                  $prof_full_name = $row["prof_fname"] . " " . $row["prof_lname"];
-                  $dept_name = $row["dept_name"];
-                  echo "<option value = '$prof_id'>" . $prof_full_name . "&nbsp;&nbsp;|&nbsp;&nbsp;" . $dept_name . "</option>";
-                }
+                        if ($lastDept != $dept_name) {
+                          if ($lastDept != null) {
+                            echo "</ul></li>"; // Close previous optgroup
+                          }
+                          echo "<li class='dropdown-header'>$dept_name</li><li><ul class='list-unstyled'>";
+                          $lastDept = $dept_name;
+                        }
 
-                ?>
-              </select>
+                        echo "<li>
+                  <label class='form-check-label'>
+                    <input value='$prof_id' type='checkbox' name='professor[]' class='form-check-input'>
+                    $prof_full_name
+                  </label>
+                </li>";
+                      }
+                      if ($lastDept != null) {
+                        echo "</ul></li>"; // Close last optgroup
+                      }
+                    } else {
+                      echo "<li class='dropdown-header'>Error fetching data.</li>";
+                    }
+
+                    ?>
+                  </ul>
+                </div>
+                <input type="hidden" name="selected_professors" id="selected_professors">
+              </div>
             </div>
 
             <div class="text-center">
@@ -79,6 +119,19 @@
       </div>
     </div>
   </section>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+  const checkboxes = document.querySelectorAll('input[name="professor[]"]');
+  const selectedProfessorsInput = document.getElementById('selected_professors');
+
+  checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+      const selectedProfessorIds = Array.from(document.querySelectorAll('input[name="professor[]"]:checked')).map(el => el.value);
+      selectedProfessorsInput.value = selectedProfessorIds.join(',');
+    });
+  });
+});
+  </script>
 </body>
 
 </html>
@@ -91,14 +144,14 @@ if (isset($_POST["course_semester"])) {
 
   $insert_query = "INSERT INTO
     teaching (
-        professor_id,
-        course_id,
-        semester_id
+      professor_id,
+      course_id,
+      semester_id
     )
     VALUES (
-        '$professor',
-        '$course',
-        '$semester'
+      '$professor',
+      '$course',
+      '$semester'
     )
     ";
 

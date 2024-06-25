@@ -5,7 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Professor - Add</title>
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
 <body>
@@ -15,76 +14,99 @@
   include("../includes/alerts.php");
   ?>
 
-  <script src="../js/customized_alert.js"></script>
 
   <section class="mx-auto grades text-center min-vh-100 py-5 px-3">
     <header class="header-adj2 mb-5">
-      <h2 class=" f-header fs-1 fw-bold text-white">Add Professor</h2>
+      <h2 class=" f-header fs-1 fw-bold text-white"><?php echo isset($_POST['edit_id']) ? 'Edit Professor' : 'Add Professor'; ?></h2>
     </header>
     <div class="container">
-      <div class="row align-items-center justify-content-center">
+      <div class="row justify-content-center">
+        <form action="" method="post" class="bg-dark text-white col-md-6 p-4 rounded">
 
-        <form action="" method="post" class="form-group col-md-6 bg-dark text-white p-5 rounded">
+          <?php
+
+          // Get the selected department from the POST data (if any)
+          $selectedDepartment = isset($_POST['edit_dept_name']) ? $_POST['edit_dept_name'] : '';
+
+          // Fetch departments from the database
+          $retrieve_query = "SELECT name FROM department";
+          $result = $conn->query($retrieve_query);
+          ?>
+
           <div class="mb-3">
-            <label for="dept" class="form-label">Department:</label>
+            <label for="dept" class="form-label">Department Name</label>
             <select name="dept" id="dept" class="form-select text-center">
-              <option value="" disabled selected>Select department</option>
+              <option value="" disabled <?php echo ($selectedDepartment == '') ? 'selected' : ''; ?>>Select department</option>
               <?php
-              $retrieve_query = "SELECT name FROM department";
-              $result = $conn->query($retrieve_query);
-              while ($row = $result->fetch_assoc()) {
-                echo "<option value = ' " . $row['name'] . "'>" . $row["name"] . "</option>";
-              }
+              while ($row = $result->fetch_assoc()) :
+                $selected = ($row['name'] == $selectedDepartment) ? 'selected' : '';
               ?>
+                <option value="<?php echo $row['name'] ?>" <?php echo $selected ?>><?php echo $row["name"] ?></option>
+              <?php endwhile ?>
             </select>
           </div>
 
-          <div class="row g-3 mb-3">
+          <!-- First Name and Last Name -->
+          <div class="row mb-3">
             <div class="col-md-6">
               <label for="fname" class="form-label">First Name:</label>
-              <input type="text" class="form-control text-center" name="fname" id="fname">
+              <input type="text" class="form-control text-center" name="fname" id="fname" value="<?php echo isset($_POST['edit_id']) ? $_POST['edit_fname'] : '' ?>" required>
             </div>
-
             <div class="col-md-6">
               <label for="lname" class="form-label">Last Name:</label>
-              <input type="text" class="form-control text-center" name="lname" id="lname">
+              <input type="text" class="form-control text-center" name="lname" id="lname" value="<?php echo isset($_POST['edit_id']) ? $_POST['edit_lname'] : '' ?>" required>
             </div>
           </div>
 
-          <!-- Gender and Birth Date -->
-          <div class="row g-2 mb-3">
+          <!-- Gender -->
+          <?php
+          $genders = [
+            "Male" => "Male",
+            "Female" => "Female"
+          ];
+
+          // Get the selected gender from the POST data (if any)
+          $selectedGender = isset($_POST['edit_gender']) ? $_POST['edit_gender'] : '';
+          ?>
+
+          <div class="row mb-3">
             <div class="col-md-6">
               <label for="gender" class="form-label">Gender:</label>
-              <select name="gender" id="gender" class="form-select text-center">
-                <option value="" disabled selected>select gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
+              <select name="gender" id="gender" class="form-select text-center" required>
+                <option value="" disabled>--Select--</option>
+                <?php
+                foreach ($genders as $value => $text) :
+                  $selected = ($value == $selectedGender) ? 'selected' : '';
+                ?>
+                  <option value="<?php echo $value ?>" <?php echo $selected ?>><?php echo $text ?></option>
+
+                <?php endforeach ?>
               </select>
             </div>
+
+            <!-- Birth Date -->
             <div class="col-md-6">
-              <label for="bdate" class="form-label">Birth Date:</label>
-              <input type="date" class="form-control text-center" name="bdate" id="bdate">
+              <label for="birth" class="form-label">Birth Date:</label>
+              <input type="date" class="form-control text-center" name="birth" id="birth" value="<?php echo isset($_POST['edit_id']) ? $_POST['edit_bdate'] : '' ?>" required>
             </div>
+
           </div>
 
           <!-- City and Street -->
           <div class="row mb-3">
             <div class="col-md-6">
               <label for="city" class="form-label">City:</label>
-              <input type="text" class="form-control text-center" name="city" id="city" required>
+              <input type="text" class="form-control text-center" name="city" id="city" value="<?php echo isset($_POST['edit_id']) ? $_POST['edit_city'] : '' ?>">
             </div>
             <div class="col-md-6">
               <label for="street" class="form-label">Street:</label>
-              <input type="text" class="form-control text-center" name="street" id="street">
+              <input type="text" class="form-control text-center" name="street" id="street" value="<?php echo isset($_POST['edit_id']) ? $_POST['edit_street'] : '' ?>">
             </div>
           </div>
 
           <script src="../js/phone_input.js"></script>
-          <script>
-            removeButton.style.marginLeft = "8px";
-          </script>
 
-          <!-- Add phone number input area -->
+          <!-- Phone Numbers -->
           <div id="inputArea" class="row g-2 mb-3">
             <!-- Phone number inputs will be added here -->
           </div>
@@ -92,17 +114,19 @@
 
           <div class="mb-3">
             <label for="email" class="form-label">E-mail:</label>
-            <input type="email" name="email" id="email" class="form-control text-center">
+            <input type="email" name="email" id="email" class="form-control text-center" value="<?php echo isset($_POST['edit_id']) ? $_POST['edit_email'] : '' ?>" required>
           </div>
 
 
+          <!-- Submit Button -->
           <div class="text-center">
-            <input class="btn btn-primary mt-4" type="submit" value="Add Professor" name="new_professor">
+            <input type="submit" class="btn btn-primary" name="new_professor" value="<?php echo isset($_POST['edit_id']) ? 'Edit Professor' : 'Add Professor'; ?>" >
           </div>
         </form>
       </div>
     </div>
   </section>
+
 
 </body>
 
@@ -110,53 +134,83 @@
 
 <?php
 
+if (isset($_POST["edit_id"])) {
+  $_SESSION["professor_edit_id"] = $_POST["edit_id"];
+}
+
 if (isset($_POST["new_professor"])) {
   $fname = $_POST["fname"];
   $lname = $_POST["lname"];
-  $dept_name = $_POST["dept"];
+  $email = $_POST["email"];
   $gender = $_POST["gender"];
-  $birth = $_POST["bdate"];
   $city = $_POST["city"];
   $street = $_POST["street"];
-  $email = $_POST["email"];
-  $password = $_POST["password"];
+  $birth = $_POST["birth"];
+  $dept_name = $_POST["dept"];
+  $registration_date = date("y-m-d");
 
-  $retrieve = " SELECT id FROM department WHERE name = '$dept_name'";
+  $retrieve = "SELECT id FROM department WHERE name = '$dept_name'";
+
   $result = $conn->query($retrieve);
 
   if ($result && $result->num_rows > 0) {
     $dept_id = $result->fetch_assoc()['id'];
   }
 
-  $insert_query = "INSERT INTO
+  if (isset($_SESSION["professor_edit_id"])) {
+    $update_query = "UPDATE professor
+    SET
+      id = '$_SESSION[professor_edit_id]',
+      first_name = '$fname',
+      last_name = '$lname',
+      department_id = '$dept_id',
+      gender = '$gender',
+      birth_date = '$birth',
+      city = '$city',
+      street = '$street',
+      email = '$email'
+    
+    WHERE id = '$_SESSION[professor_edit_id]'
+    ";
+    $update = $conn->query($update_query);
+
+    header("location: professor_view.php?edit=true");
+
+  } else {
+    $insert_query = "INSERT INTO 
     professor (
-        department_id,
-        first_name,
-        last_name,
-        birth_date,
-        gender,
-        city,
-        street
-        email
-    )
+      id, 
+      first_name, 
+      last_name, 
+      department_id, 
+      registration_date,
+      gender, 
+      birth_date, 
+      city, 
+      street, 
+      email
+    ) 
     VALUES (
-        '$dept_id',
-        '$fname',
-        '$lname',
-        '$birth',
-        '$gender',
-        '$city',
-        '$street',
-        '$email'
-    )
+      '$id', 
+      '$fname',  
+      '$lname',  
+      '$dept_id',
+      '$registration_date',  
+      '$gender', 
+      '$birth', 
+      '$city' , 
+      '$street',  
+      '$email'
+        )
     ";
 
-  $insert = $conn->query($insert_query);
+    $insert = $conn->query($insert_query);
 
-  if ($insert) {
-    displayAlert("Professor", "Added", "success", "Successful!", "Successfully.\nDatabase Insertion Done!", "OK");
-  } else {
-    displayAlert("Professor", "Added", "error", "Failed!", "\nPlease Try Again", "Try Again");
+    if ($insert) {
+      displayAlert("Professor", "Added", "success", "Successful!", "Successfully.\nDatabase Insertion Done!", "OK");
+    } else {
+      displayAlert("Professor", "Added", "error", "Failed!", "\nPlease Try Again", "Try Again");
+    }
   }
 
   $professorId = mysqli_insert_id($conn);

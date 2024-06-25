@@ -11,9 +11,9 @@
 
 <body>
   <?php
-  header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-  header("Expires: Sat, 01 Jan 2000 00:00:00 GMT");
-  header("Pragma: no-cache");
+  //header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+  //header("Expires: Sat, 01 Jan 2000 00:00:00 GMT");
+  //header("Pragma: no-cache");
 
   include("../includes/identity_nav.php");
   include("menu_nav.html");
@@ -26,10 +26,10 @@
       <h2 class=" f-header fs-1 fw-bold text-white">Add Schedule</h2>
     </header>
 
-    <div class="container form-group col-md-6 bg-dark text-white p-5 rounded">
+    <div class="container">
       <div class="row align-items-center justify-content-center">
 
-        <form action="" id="course_form" method="post">
+        <form action="" id="course_form" class="form-group col-md-6 bg-dark text-white p-5 rounded" method="post">
           <div class="row mb-3">
             <label for="course" class="form-label">Course</label>
             <select name="course" id="course" class="form-select text-center" onchange="this.form.submit()">
@@ -39,9 +39,7 @@
               ?>
             </select>
           </div>
-        </form>
 
-        <form action="" id="activity_form" method="post">
           <?php
           switch ($_SESSION["activity"]) {
             case "Lecture":
@@ -54,7 +52,12 @@
                     <option value="Lecture">Lecture</option>
 
                     <?php
-                    $retrieve = "v
+                    $retrieve = "SELECT assessment.type 
+                              FROM 
+                                assessment, assessment_onsite_schedule
+                              WHERE
+                                assessment_onsite_schedule.assessment_id = assessment.assess_id  
+                                AND assessment_onsite_schedule.due_date IS NULL
                               ";
 
                     $result = $conn->query($retrieve);
@@ -71,6 +74,7 @@
                 <div class="col">
                   <label for="professor" class="form-label">Professor Name</label>
                   <select name="professor" id="professor" class="form-select">
+                    <option value="" disabled select>select professor</option>
                     <?php
                     $retrieve = "SELECT 
                               professor.id,
@@ -86,15 +90,14 @@
                               AND teaching.course_id = '$_SESSION[course]'
                               ";
                     $result = $conn->query($retrieve);
-                    while ($row = $result->fetch_assoc()) {
+                    while ($row = $result->fetch_assoc()) :
                       $prof_id = $row["id"];
                       $prof_full_name = $row["prof_fname"] . " " . $row["prof_lname"];
-
                     ?>
 
                       <option value="<?php echo $prof_id ?>"><?php echo $prof_full_name ?></option>
 
-                    <?php } ?>
+                    <?php endwhile ?>
                   </select>
                 </div>
               </div>
@@ -135,14 +138,9 @@
           }
           ?>
 
+          <div class="row mb-3">
 
-        </form>
-
-        <div class="row mb-3">
-
-          <div class="col-md-3">
-
-            <form action="" id="location_form" method="post">
+            <div class="col-md-3">
               <label for="location" class="form-label">Location</label>
               <select name="location" id="location" class="form-select text-center" onchange="this.form.submit()">
                 <option value="" disabled selected>select location</option>
@@ -150,19 +148,16 @@
                 $retrieve = "SELECT DISTINCT location FROM hall";
                 $result = $conn->query($retrieve);
 
-                while ($location = $result->fetch_assoc()["location"]) {
+                while ($location = $result->fetch_assoc()["location"]) :
 
                 ?>
                   <option value="<?php echo $location ?>"><?php echo $location ?></option>
 
-                <?php
-                } ?>
+                <?php endwhile ?>
               </select>
-            </form>
-          </div>
+            </div>
 
-          <div class="col-md-3">
-            <form action="" id="building_form" method="post">
+            <div class="col-md-3">
               <label for="building" class="form-label">Building</label>
               <select name="building" id="building" class="form-select text-center" onchange="this.form.submit()">
                 <option value="" disabled selected>select building</option>
@@ -178,20 +173,16 @@
                 <?php
                 } ?>
               </select>
-            </form>
-          </div>
-          <div class="col-md-3">
-            <form action="" id="room_type" method="post">
-              <label for="roomType" class="form-label">Hall/Lab</label>
+            </div>
+            <div class="col-md-3">
+              <label for="roomType" class="form-label">Room</label>
               <select name="roomType" id="roomType" class="form-select text-center" onchange="this.form.submit()">
                 <option value="">select room type</option>
                 <option value="hall">Hall</option>
                 <option value="lab">Lab</option>
               </select>
-            </form>
-          </div>
-          <div class="col-md-3">
-            <form action="" id="room_form" method="post">
+            </div>
+            <div class="col-md-3">
               <label for="room" class="form-label"> <?php echo $_SESSION["roomType"] ?> </label>
               <select name="room" id="room" class="form-select" onchange="this.form.submit()">
                 <option value="" disabled selected>select room</option>
@@ -203,27 +194,24 @@
                 $roomType = $_POST['roomType'];
 
                 if (in_array($roomType, $allowedTables)) {
-                  $retrieve = "SELECT id FROM `$roomType` WHERE `location` = '$location' AND `building` = '$building'";
+                  $retrieve = "SELECT id, capacity FROM `$roomType` WHERE `location` = '$location' AND `building` = '$building'";
                 }
 
                 $result = $conn->query($retrieve);
 
-                while ($room_id = $result->fetch_assoc()["id"]) {
+                while ($row = $result->fetch_assoc()) :
+                  $room_id = $row["id"];
+                  $room_capacity = $row["capacity"]
                 ?>
-                  <option value="<?php echo $room_id ?>"><?php echo $room_id ?></option>
+                  <option value="<?php echo $room_id ?>"><?php echo $room_id ?> - <?php echo $room_capacity ?> Students</option>
 
-                <?php } ?>
+                <?php endwhile ?>
               </select>
-            </form>
+            </div>
           </div>
-        </div>
-        <div class="row">
-
-          <form action="" method="post">
-
+          <div class="row mb-3">
 
             <?php
-
             switch ($_SESSION["activity"]) {
               case "Lecture":
               case "Section":
@@ -252,22 +240,26 @@
             }
             ?>
 
-        </div>
-        <div class="row">
-          <div class="col">
-            <label for="start_time" class="form-label">Start Time</label>
-            <input type="time" name="start_time" id="start_time" class="form-control">
           </div>
-          <div class="col">
-            <label for="end_time" class="form-label">End Time</label>
-            <input type="time" name="end_time" id="end_time" class="form-control">
+          <div class="row mb-3">
+
+            <div class="col">
+              <label for="start_time" class="form-label">Start Time</label>
+              <input type="time" name="start_time" id="start_time" class="form-control">
+            </div>
+
+            <div class="col">
+              <label for="end_time" class="form-label">End Time</label>
+              <input type="time" name="end_time" id="end_time" class="form-control">
+            </div>
+
           </div>
-        </div>
-        <input class="btn btn-primary mt-4" type="submit" value="Add Schedule" name="new_schedule" id="new_schedule">
+          <input class="btn btn-primary mt-4" type="submit" value="Add Schedule" name="new_schedule" id="new_schedule">
         </form>
       </div>
     </div>
   </section>
+
   <script src="../js/select_save_load.js"></script>
   <script>
     handleDataUpdate("course");
@@ -320,9 +312,7 @@ if (isset($_POST["new_schedule"])) {
         )
         ";
     $insert = $conn->query($insert_query);
-  } 
-  
-  else {
+  } else {
     $hall_id = $_POST["room"];
     $due_date = $_POST["date"];
     $start_time = $_POST["start_time"];
@@ -336,12 +326,12 @@ if (isset($_POST["new_schedule"])) {
       AND course_id = '$course_id'
     ";
     $result = $conn->query($retrieve);
-    
+
     $assess_id = $result->fetch_assoc();
 
     $insert_query = "UPDATE assessment_onsite_schedule 
                      SET 
-                      hall_no = '$hall_no',
+                      room_id = '$hall_no',
                       due_date = '$due_date', 
                       start_time = '$start_time', 
                       end_time = '$end_time'

@@ -59,7 +59,7 @@
               assessment_onsite_schedule.due_date,
               assessment_onsite_schedule.start_time,
               assessment_onsite_schedule.end_time,
-              GROUP_CONCAT(DISTINCT assessment_onsite_schedule.hall_no SEPARATOR ', ') AS halls, 
+              GROUP_CONCAT(DISTINCT assessment_onsite_schedule.room_id SEPARATOR ', ') AS halls, 
               GROUP_CONCAT(DISTINCT hall.building SEPARATOR ', ') as building,
               GROUP_CONCAT(DISTINCT hall.location SEPARATOR ', ') as location,
               course.name AS crs_name
@@ -71,7 +71,7 @@
               enrollment
             WHERE 
                   assessment_onsite_schedule.assessment_id = assessment.assess_id
-              AND assessment_onsite_schedule.hall_no = hall.id
+              AND assessment_onsite_schedule.room_id = hall.id
               AND assessment.course_id = course.id
               AND assessment.semester_id = $choosen_semester
               AND assessment.type = 'Midterm'
