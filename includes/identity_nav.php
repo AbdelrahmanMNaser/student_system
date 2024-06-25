@@ -55,7 +55,7 @@
               <a class="text-white text-decoration-none" href="account.php">Account</a>
             </li>
             <li>
-              <a class="text-white text-decoration-none" href="../login/logout.php?logout=true">Logout</a>
+              <a class="text-white text-decoration-none" href="../../login/logout.php?logout=true">Logout</a>
             </li>
           </ul>
         </li>

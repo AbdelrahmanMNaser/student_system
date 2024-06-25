@@ -6,13 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Grades</title>
-  <script src="js/jquery-3.7.1.min.js"></script>
+  <script src="/js/jquery-3.7.1.min.js"></script>
 
 </head>
 
 <body>
   <?php
-  session_start();
   include("../../includes/identity_nav.php");
   include("menu_nav.html");
   include("../../includes/scores_grades.php");
@@ -73,7 +72,7 @@
               <td><?php echo $course_credits ?></td>
               <td><?php echo $grade ?></td>
               <td>
-                <a href="course_view-scores.php" class="course-grades-link" data-course-name="<?php echo $course_name ?>" data-course-id="<?php echo $course_code ?>">Scores</a>
+                <a href="course_view-score.php" class="course-grades-link" data-course-name="<?php echo $course_name ?>" data-course-id="<?php echo $course_code ?>">Scores</a>
               </td>
             </tr>
           <?php endwhile ?>
@@ -87,12 +86,12 @@
 
   </section>
 
-  <script src="js/select_save_load.js"></script>
+  <script src="/js/click_save_load.js"></script>
   <script>
     handleDataUpdate("semester");
   </script>
 
-  <script src="js/click_save_load.js"></script>
+  <script src="/js/click_save_load.js"></script>
   <script>
     handleCourseLinkClick('.course-grades-link');
   </script>

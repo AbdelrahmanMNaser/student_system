@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Course - View</title>
-  <script src="js/jquery-3.7.1.min.js"></script>
+  <script src="/js/jquery-3.7.1.min.js"></script>
 
 </head>
 
@@ -78,7 +78,7 @@
       ";
 
         $result = $conn->query($retrieve);
-        while ($row = $result->fetch_assoc()) {
+        while ($row = $result->fetch_assoc()) :
           $course_code = $row["course_id"];
           $course_name = $row["course_name"];
           $course_description = $row["course_description"];
@@ -89,7 +89,7 @@
           <tr>
             <td><?php echo $course_code ?></td>
             <td>
-              <a href="/student/course_view-details.php" class="course-link" data-course-name="<?php echo $course_name ?>" data-course-id="<?php echo $course_code ?>">
+              <a href="course_view-details.php" class="course-link" data-course-name="<?php echo $course_name ?>" data-course-id="<?php echo $course_code ?>">
                 <?php echo $course_name ?>
               </a>
             </td>
@@ -99,9 +99,7 @@
             <td><?php echo $course_description ?></td>
           </tr>
 
-        <?php
-        }
-        ?>
+        <?php endwhile ?>
 
       </tbody>
 
@@ -109,12 +107,12 @@
 
   </section>
 
-  <script src="js/select_save_load.js"></script>
+  <script src="/js/select_save_load.js"></script>
   <script>
     handleDataUpdate("semester");
   </script>
 
-  <script src="js/click_save_load.js"></script>
+  <script src="/js/click_save_load.js"></script>
 
   <script>
     handleCourseLinkClick('.course-link');

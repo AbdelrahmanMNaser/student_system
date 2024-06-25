@@ -29,6 +29,8 @@
         if ($result->num_rows > 0) {
           $name = $result->fetch_assoc()["dept_name"];
         }
+
+        var_dump($_SESSION);
         ?>
 
         <p class="text-white">Department of <span class=" fw-bold"><?php echo $name; ?></span> </p>

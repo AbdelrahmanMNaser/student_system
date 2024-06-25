@@ -25,7 +25,7 @@ function handleDataUpdate(dataKey) {
 }
 
 function updateSession(dataKey, dataValue) {
-  return $.post("../../includes/update_session.php", {
+  return $.post("/includes/update_session.php", {
     [dataKey]: dataValue,
   }).fail(function (jqXHR, textStatus, errorThrown) {
     // Handle error here

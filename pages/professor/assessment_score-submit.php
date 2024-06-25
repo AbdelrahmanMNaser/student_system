@@ -4,9 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="js/jquery-3.7.1.min.js"></script>
+  <title>Assessment | Score - Submit</title>  
+  
+  <script src="/js/jquery-3.7.1.min.js"></script>
 
-  <title>Assessment | Score - Submit</title>
 
 </head>
 
@@ -139,13 +140,13 @@
       ?>
     <?php endif ?>
 
-    <script src="js/select_save_load.js"></script>
+    <script src="/js/select_save_load.js"></script>
     <script>
       handleDataUpdate("category");
       handleDataUpdate("student_id");
     </script>
-    <script src="js/show_score_input.js"></script>
-    <script src="js/handle_id_score_input.js"></script>
+    <script src="/js/show_score_input.js"></script>
+    <script src="/js/handle_id_score_input.js"></script>
 
   </section>
 

@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>University</title>
 
-  <script src="js/jquery-3.7.1.min.js"></script>
+  <script src="/js/jquery-3.7.1.min.js"></script>
 
 </head>
 
@@ -140,7 +140,7 @@
     </div>
   </section>
 
-  <script src="js/select_save_load.js"></script>
+  <script src="/js/select_save_load.js"></script>
   <script>
     handleDataUpdate("category");
     handleDataUpdate("receive_method");

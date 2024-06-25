@@ -6,14 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Schedule - Add</title>
 
-  <script src="js/jquery-3.7.1.min.js"></script>
+  <script src="/js/jquery-3.7.1.min.js"></script>
 </head>
 
 <body>
   <?php
-  //header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-  //header("Expires: Sat, 01 Jan 2000 00:00:00 GMT");
-  //header("Pragma: no-cache");
 
   include("../../includes/identity_nav.php");
   include("menu_nav.html");
@@ -260,7 +257,7 @@
     </div>
   </section>
 
-  <script src="js/select_save_load.js"></script>
+  <script src="/js/select_save_load.js"></script>
   <script>
     handleDataUpdate("course");
     handleDataUpdate("activity");

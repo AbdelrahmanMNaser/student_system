@@ -9,16 +9,20 @@ function handleCourseLinkClick(course_link) {
     
       console.log(ajaxUrl);
 
-    $.ajax({
-      url: ajaxUrl,
-      type: 'POST',
-      data: {
-        course_id: course_id,
-        course_name: course_name
-      },
-      success: function () {
-        window.location.href = href;
-      }
-    });
+      $.ajax({
+        url: ajaxUrl,
+        type: 'POST',
+        data: {
+          course_id: course_id,
+          course_name: course_name
+        },
+        success: function () {
+          window.location.href = href;
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.log(textStatus, errorThrown);
+        }
+      });
+      
   });
 }

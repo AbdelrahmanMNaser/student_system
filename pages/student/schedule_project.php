@@ -7,7 +7,7 @@
 
   <title>University</title>
 
-  <script src="js/jquery-3.7.1.min.js"></script>
+  <script src="/js/jquery-3.7.1.min.js"></script>
 
 </head>
 
@@ -149,7 +149,7 @@
 
   </section>
 
-  <script src="js/select_save_load.js"></script>
+  <script src="/js/select_save_load.js"></script>
 </body>
 
 </html>

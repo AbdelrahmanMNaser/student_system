@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Assessment</title>
 
-  <script src="js/jquery-3.7.1.min.js"></script>
+  <script src="/js/jquery-3.7.1.min.js"></script>
 </head>
 
 <body>
@@ -48,13 +48,13 @@
       </div>
     </div>
   </section>
-  <script src="js/select_save_load.js"></script>
+  <script src="/js/select_save_load.js"></script>
 
   <script>
     handleDataUpdate('semester');
   </script>
 
-  <script src="js/search_assessment.js"></script>
+  <script src="/js/search_assessment.js"></script>
 </body>
 
 </html>

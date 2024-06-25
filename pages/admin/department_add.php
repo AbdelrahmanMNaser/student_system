@@ -48,8 +48,6 @@
 
 <?php
 
-session_start(); // Start the session at the beginning of your script
-
 if (isset($_POST["edit"])) {
   $_SESSION["dept_id_edit"] = $_POST["edit"];
 }
