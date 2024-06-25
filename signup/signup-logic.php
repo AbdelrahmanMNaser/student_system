@@ -1,14 +1,16 @@
 <?php
 
-include("../includes/db_connection.php");
-include("../signup.html");
-include("../includes/alerts.php");
+include("../../includes/db_connection.php");
+include("signup.html");
+include("../../includes/alerts.php");
 
 if (isset($_POST["new_admin"])) {
   $fname = $_POST["fname"];
   $lname = $_POST["lname"];
   $gender = $_POST["gender"];
   $birth = $_POST["bdate"];
+  $city = $_POST["city"];
+  $street = $_POST["street"];
   $email = $_POST["email"];
   $password = $_POST["password"];
 
@@ -18,6 +20,8 @@ if (isset($_POST["new_admin"])) {
         last_name,
         gender,
         birth_date,
+        city,
+        street,
         email, 
         password
     )
@@ -26,6 +30,8 @@ if (isset($_POST["new_admin"])) {
         '$lname',
         '$gender',
         '$birth',
+        '$city',
+        '$street'
         '$email', 
         '$password'
     )
@@ -58,7 +64,5 @@ if (isset($_POST["new_admin"])) {
         ";
 
     $insert_phone = $conn->query($insert_phone_query);
-
-
   }
 }

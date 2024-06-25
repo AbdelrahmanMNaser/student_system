@@ -53,7 +53,7 @@ if (isset($_POST["login_email"])) {
         $_SESSION["lname"] = $user["last_name"];
         $_SESSION["gender"] = $user["gender"];
 
-        header("Location: ../{$role}/home.php");
+        header("Location: ../pages/{$role}/home.php");
     } else {
         // The password is incorrect
 
